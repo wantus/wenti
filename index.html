@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>南开滨海文体部</title>
+<style>
+:root {
+  --bg-1: #fef6ff;
+  --bg-2: #e8f3ff;
+  --primary: #7c57b8;
+  --primary-light: #9d7ec9;
+  --text: #333;
+  --text-light: #666;
+  --card: #fff;
+  --radius: 16px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+  min-height: 100vh;
+  color: var(--text);
+}
+nav {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(10px);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(124,87,184,0.08);
+}
+nav .logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+}
+nav .links a {
+  margin-left: 24px;
+  text-decoration: none;
+  color: var(--text-light);
+  font-size: 15px;
+  transition: color 0.2s;
+}
+nav .links a:hover, nav .links a.active { color: var(--primary); font-weight: 600; }
+.container { max-width: 900px; margin: 0 auto; padding: 32px 20px; }
+.hero {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.hero h1 {
+  font-size: 32px;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.hero p { color: var(--text-light); font-size: 16px; }
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 16px rgba(124,87,184,0.08);
+  transition: transform 0.2s;
+}
+.card:hover { transform: translateY(-2px); }
+.card h3 { color: var(--primary); margin-bottom: 8px; font-size: 18px; }
+.card .date { font-size: 13px; color: #999; margin-bottom: 10px; }
+.card .content { line-height: 1.7; color: var(--text); font-size: 15px; }
+.loading { text-align: center; color: var(--text-light); padding: 40px; }
+@media (max-width: 600px) {
+  nav { padding: 12px 16px; flex-wrap: wrap; }
+  nav .links a { margin-left: 14px; font-size: 14px; }
+  .hero h1 { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">🎭 文体部</div>
+  <div class="links">
+    <a href="index.html" class="active">首页</a>
+    <a href="member.html">成员档案</a>
+    <a href="gallery.html">部门相册</a>
+    <a href="log.html">工作日志</a>
+  </div>
+</nav>
+<div class="container">
+  <div class="hero">
+    <h1>南开滨海文体部</h1>
+    <p>团结 · 乐与泪同源 · 明理敬爱</p>
+  </div>
+  <div id="noticeList" class="loading">加载公告中...</div>
+</div>
+<script src="config.js"></script>
+<script>
+async function loadNotices() {
+  try {
+    const records = await fetchRecords(DINGTALK_CONFIG.bases.notice);
+    const visible = records.filter(r => r['是否显示'] === true);
+    visible.sort((a, b) => (a['排序'] || 0) - (b['排序'] || 0));
+    if (visible.length === 0) {
+      document.getElementById('noticeList').innerHTML = '<div class="loading">暂无公告</div>';
+      return;
+    }
+    document.getElementById('noticeList').innerHTML = visible.map(r => {
+      const d = new Date(r['发布日期']);
+      const ds = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+      return `<div class="card">
+        <h3>${r['标题'] || ''}</h3>
+        <div class="date">${ds}</div>
+        <div class="content">${r['内容'] || ''}</div>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    document.getElementById('noticeList').innerHTML = '<div class="loading">加载失败，请检查网络</div>';
+  }
+}
+loadNotices();
+</script>
+</body>
+</html>

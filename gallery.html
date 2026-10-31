@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>部门相册 - 南开滨海文体部</title>
+<style>
+:root {
+  --bg-1: #fef6ff; --bg-2: #e8f3ff; --primary: #7c57b8;
+  --text: #333; --text-light: #666; --card: #fff; --radius: 16px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+  min-height: 100vh; color: var(--text);
+}
+nav {
+  background: rgba(255,255,255,0.85); backdrop-filter: blur(10px);
+  padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(124,87,184,0.08);
+}
+nav .logo { font-size: 20px; font-weight: 700; color: var(--primary); }
+nav .links a { margin-left: 24px; text-decoration: none; color: var(--text-light); font-size: 15px; }
+nav .links a:hover, nav .links a.active { color: var(--primary); font-weight: 600; }
+.container { max-width: 900px; margin: 0 auto; padding: 32px 20px; }
+.hero { text-align: center; margin-bottom: 30px; }
+.hero h1 { font-size: 28px; color: var(--primary); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.card {
+  background: var(--card); border-radius: var(--radius); overflow: hidden;
+  box-shadow: 0 4px 16px rgba(124,87,184,0.08); cursor: pointer;
+  transition: transform 0.2s;
+}
+.card:hover { transform: translateY(-3px); }
+.card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+.card .info { padding: 14px 16px; }
+.card .info h3 { font-size: 16px; margin-bottom: 4px; color: var(--primary); }
+.card .info p { font-size: 13px; color: var(--text-light); }
+.loading { text-align: center; color: var(--text-light); padding: 40px; }
+.lightbox {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+  z-index: 1000; align-items: center; justify-content: center; padding: 20px;
+}
+.lightbox.active { display: flex; }
+.lightbox img { max-width: 95%; max-height: 90%; border-radius: 8px; }
+.lightbox .close {
+  position: absolute; top: 20px; right: 24px; color: #fff; font-size: 36px;
+  cursor: pointer; line-height: 1;
+}
+@media (max-width: 600px) {
+  nav { padding: 12px 16px; flex-wrap: wrap; }
+  nav .links a { margin-left: 14px; font-size: 14px; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">🎭 文体部</div>
+  <div class="links">
+    <a href="index.html">首页</a>
+    <a href="member.html">成员档案</a>
+    <a href="gallery.html" class="active">部门相册</a>
+    <a href="log.html">工作日志</a>
+  </div>
+</nav>
+<div class="container">
+  <div class="hero"><h1>部门相册</h1></div>
+  <div id="galleryList" class="loading">加载相册中...</div>
+</div>
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('active')">
+  <span class="close">&times;</span>
+  <img id="lightboxImg" src="">
+</div>
+<script src="config.js"></script>
+<script>
+async function loadGallery() {
+  try {
+    const records = await fetchRecords(DINGTALK_CONFIG.bases.gallery);
+    const visible = records.filter(r => r['是否显示'] === true);
+    visible.sort((a, b) => (a['排序'] || 0) - (b['排序'] || 0));
+    if (visible.length === 0) {
+      document.getElementById('galleryList').innerHTML = '<div class="loading">暂无照片</div>';
+      return;
+    }
+    document.getElementById('galleryList').innerHTML = '<div class="grid">' + visible.map(r => `
+      <div class="card" onclick="openLightbox('${r['图片链接'] || ''}')">
+        <img src="${r['图片链接'] || ''}" alt="${r['标题'] || ''}" loading="lazy">
+        <div class="info">
+          <h3>${r['标题'] || ''}</h3>
+          <p>${r['描述'] || ''}</p>
+        </div>
+      </div>`).join('') + '</div>';
+  } catch (e) {
+    document.getElementById('galleryList').innerHTML = '<div class="loading">加载失败</div>';
+  }
+}
+function openLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('active');
+}
+loadGallery();
+</script>
+</body>
+</html>
