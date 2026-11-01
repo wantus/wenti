@@ -8,6 +8,8 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 允许提交代码
     steps:
       - uses: actions/checkout@v4
       - name: 拉取钉钉数据
