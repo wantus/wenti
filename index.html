@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>南开滨海文体部</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f7fa;
+  --bg-card: rgba(255,255,255,0.85);
+  --primary: #6b5b8e;
+  --primary-light: #9d8fc4;
+  --accent: #c4b5d9;
+  --text: #2d2d3a;
+  --text-light: #8a8a9a;
+  --shadow: 0 4px 24px rgba(107,91,142,0.08);
+  --shadow-hover: 0 8px 32px rgba(107,91,142,0.14);
+  --radius: 20px;
+}
+body.dark {
+  --bg: #12121e;
+  --bg-card: rgba(30,30,50,0.85);
+  --primary: #b8a5e0;
+  --primary-light: #9d8fc4;
+  --accent: #6b5b8e;
+  --text: #e8e8f0;
+  --text-light: #9a9ab0;
+  --shadow: 0 4px 24px rgba(0,0,0,0.3);
+  --shadow-hover: 0 8px 32px rgba(0,0,0,0.4);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: linear-gradient(90deg, #ffd6e8 0%, #e8d5ff 50%, #d6e4ff 100%);
+  background-size: 200% 200%;
+  animation: wave 8s ease-in-out infinite;
+  min-height: 100vh;
+  color: var(--text);
+  line-height: 1.6;
+  position: relative;
+  overflow-x: hidden;
+}
+body.dark {
+  background: linear-gradient(90deg, #2a1a3a 0%, #1a1a2e 50%, #1a2030 100%);
+}
+@keyframes wave {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+nav {
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(107,91,142,0.06);
+  transition: all 0.3s ease;
+}
+body.dark nav {
+  background: rgba(20,20,35,0.72);
+  border-bottom: 1px solid rgba(184,165,224,0.1);
+}
+nav .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+nav .brand img {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+nav .brand span {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+nav .links { display: flex; gap: 8px; }
+nav .links a {
+  text-decoration: none;
+  color: var(--text-light);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 100px;
+  transition: all 0.25s ease;
+}
+nav .links a:hover { color: var(--primary); background: rgba(107,91,142,0.06); }
+nav .links a.active {
+  color: #fff;
+  background: var(--primary);
+  box-shadow: 0 2px 12px rgba(107,91,142,0.3);
+}
+.container { max-width: 800px; margin: 0 auto; padding: 60px 24px; }
+.hero {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.hero .crest {
+  width: 100px;
+  height: 100px;
+  border-radius: 24px;
+  margin: 0 auto 24px;
+  display: block;
+  box-shadow: 0 8px 32px rgba(107,91,142,0.15);
+}
+.hero .tag {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--primary);
+  background: rgba(107,91,142,0.08);
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+.hero h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 56px;
+  font-weight: 900;
+  background: linear-gradient(180deg, #a890d9 0%, #7b6bb0 50%, #5a4a8a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+  letter-spacing: 12px;
+  filter: drop-shadow(0 2px 8px rgba(123,107,176,0.3));
+}
+body.dark .hero h1 {
+  background: linear-gradient(180deg, #d4c5f0 0%, #b8a5e0 50%, #9d8fc4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 2px 12px rgba(184,165,224,0.4));
+}
+body.dark #typewriter {
+  color: #d4c5f0;
+}
+.hero p {
+  color: var(--primary-light);
+  font-size: 15px;
+  font-weight: 400;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+.hero p {
+  color: var(--text-light);
+  font-size: 16px;
+  font-weight: 400;
+}
+.card {
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255,255,255,0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+.card .date {
+  font-size: 13px;
+  color: var(--primary-light);
+  font-weight: 500;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+.card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12px;
+  letter-spacing: -0.2px;
+}
+.card .content {
+  color: var(--text-light);
+  font-size: 15px;
+  line-height: 1.8;
+}
+.loading {
+  text-align: center;
+  color: var(--text-light);
+  padding: 60px;
+  font-size: 14px;
+}
+.deco {
+  position: fixed;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 1;
+}
+.deco.pig {
+  bottom: 20px;
+  left: 20px;
+  width: 80px;
+}
+.deco.pony {
+  bottom: 20px;
+  right: 20px;
+  width: 90px;
+}
+@media (max-width: 600px) {
+  nav { padding: 12px 20px; }
+  nav .links a { padding: 6px 12px; font-size: 13px; }
+  .container { padding: 40px 16px; }
+  .hero h1 { font-size: 28px; }
+  .card { padding: 24px; }
+}
+
+/* 入场动画 */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+nav { animation: fadeInDown 0.6s ease-out both; }
+.hero h1 { animation: scaleIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both; }
+.hero p { animation: fadeInUp 0.6s ease-out 0.5s both; }
+.card { animation: fadeInUp 0.5s ease-out both; }
+.card:nth-child(1) { animation-delay: 0.6s; }
+.card:nth-child(2) { animation-delay: 0.75s; }
+.card:nth-child(3) { animation-delay: 0.9s; }
+.card:nth-child(4) { animation-delay: 1.05s; }
+.card:nth-child(5) { animation-delay: 1.2s; }
+.card:nth-child(6) { animation-delay: 1.35s; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand">
+    <img src="https://aka.doubaocdn.com/s/EDVt2xF5Zr" alt="部徽">
+    <span>文体部</span>
+  </div>
+  <div class="links">
+    <a href="index.html" class="active">首页</a>
+    <a href="member.html">成员</a>
+    <a href="gallery.html">相册</a>
+    <a href="log.html">日志</a>
+    <button id="themeToggle" style="background:none;border:none;cursor:pointer;font-size:18px;padding:8px 12px;border-radius:100px;transition:all 0.25s;">🌙</button>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="hero">
+    <!-- 打字机转场 -->
+    <div id="typewriter" style="
+      font-family:'Noto Serif SC',serif;
+      font-size:40px;
+      font-weight:700;
+      color:#7b6bb0;
+      min-height:64px;
+      margin-bottom:16px;
+      letter-spacing:8px;
+      transition:all 0.3s ease;
+    ">
+      <span id="typeText"></span><span style="display:inline-block;width:3px;background:#9d8fc4;animation:blink 1s infinite;margin-left:4px;">&nbsp;</span>
+    </div>
+    
+    <p id="greeting"></p>
+  </div>
+  
+  <div id="noticeList" class="loading">加载中...</div>
+</div>
+
+<!-- 访问统计 -->
+<div style="text-align:center; padding:24px; color:var(--text-light); font-size:13px; opacity:0.6;">
+  <span id="busuanzi_container_site_pv">本站访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
+  <span style="margin:0 12px;">·</span>
+  <span id="busuanzi_container_site_uv">访客 <span id="busuanzi_value_site_uv"></span> 人</span>
+</div>
+<script src="config.js"></script>
+<script src="particles.js"></script>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+// 深色/浅色模式切换，默认深色
+if (localStorage.getItem('theme') !== 'light') {
+  document.body.classList.add('dark');
+}
+const themeToggle = document.getElementById('themeToggle');
+if (document.body.classList.contains('dark')) {
+  themeToggle.textContent = '☀️';
+}
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  themeToggle.textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+});
+</script>
+<script>
+// 打字机转场动画
+(function() {
+  const typeText = document.getElementById('typeText');
+  
+  // 根据时间判断问候语
+  const hour = new Date().getHours();
+  let timeGreeting = '晚上好';
+  if (hour >= 6 && hour < 12) timeGreeting = '早上好';
+  else if (hour >= 12 && hour < 18) timeGreeting = '下午好';
+  
+  // 节日判断
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  const date = now.getDate();
+  let festivalGreeting = null;
+  
+  if (month === 1 && date === 1) festivalGreeting = '新年快乐';
+  else if (month === 1 && date === 15) festivalGreeting = '元宵节快乐';
+  else if (month === 2 && date === 14) festivalGreeting = '情人节快乐';
+  else if (month === 5 && date === 1) festivalGreeting = '劳动节快乐';
+  else if (month === 6 && date === 1) festivalGreeting = '儿童节快乐';
+  else if (month === 9 && date === 10) festivalGreeting = '教师节快乐';
+  else if (month === 10 && date === 1) festivalGreeting = '国庆节快乐';
+  
+  // 文言句子库
+  const classicalQuotes = [
+    '文体安乐',
+    '聚众同行',
+    '乐与泪同',
+    '明学敬爱',
+    '热忱奔赴',
+    '青春盛会',
+    '以 i 之名',
+    '文以载道',
+    '体以凝心',
+    '知行合一',
+    '同心协力',
+    '风华正茂',
+    '少年意气',
+    '不负青春',
+    '共赴山海',
+    '携手同行',
+    '以文会友',
+    '热爱不息',
+    '初心不改',
+    '未来可期',
+    '星光不负',
+    '韶华不负'
+  ];
+  
+  const greetingText = (festivalGreeting || timeGreeting) + '，' + classicalQuotes[Math.floor(Math.random() * classicalQuotes.length)];
+  const mainTitle = '第十届文体部';
+  
+  // 第一步：打字打出问候语
+  let i = 0;
+  function typeGreeting() {
+    if (i < greetingText.length) {
+      typeText.textContent += greetingText.charAt(i);
+      i++;
+      setTimeout(typeGreeting, 150);
+    } else {
+      // 打完后停留1.5秒，然后开始删除
+      setTimeout(eraseGreeting, 1500);
+    }
+  }
+  
+  // 第二步：删除问候语
+  function eraseGreeting() {
+    if (typeText.textContent.length > 0) {
+      typeText.textContent = typeText.textContent.slice(0, -1);
+      setTimeout(eraseGreeting, 80);
+    } else {
+      // 删完后开始打大标题
+      setTimeout(typeTitle, 300);
+    }
+  }
+  
+  // 第三步：打出大标题
+  let j = 0;
+  function typeTitle() {
+    if (j < mainTitle.length) {
+      typeText.textContent += mainTitle.charAt(j);
+      j++;
+      setTimeout(typeTitle, 200);
+    }
+  }
+  
+  typeGreeting();
+})();
+
+// 打字机闪烁动画
+const blinkStyle = document.createElement('style');
+blinkStyle.textContent = `
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+`;
+document.head.appendChild(blinkStyle);
+
+// 随机问候语（每次刷新显示不同）
+const greetings = [
+  '以 i 之真心，承一腔热忱，聚众之共鸣，共赴乐与泪的相逢',
+  '以每一个独立的 i 为基础，无数个 i 凝聚为团结的集体',
+  '文体的 i，是我们，是热爱，是奔赴同一场盛大的青春',
+  '在文与体的交织中，培养冷静的思路与高效的沟通',
+  '明学 · 理性 · 敬业 · 仁爱',
+  '流程更规范，安全有保障，学业不冲突',
+  '在发展个人的过程中发展部门'
+];
+document.getElementById('greeting').textContent = greetings[Math.floor(Math.random() * greetings.length)];
+
+async function loadNotices() {
+  try {
+    const records = await fetchRecords(DINGTALK_CONFIG.bases.notice);
+    const visible = records.filter(r => r['是否显示'] === true);
+    visible.sort((a, b) => (Number(a['排序']) || 0) - (Number(b['排序']) || 0));
+    if (visible.length === 0) {
+      document.getElementById('noticeList').innerHTML = '<div class="loading">暂无公告</div>';
+      return;
+    }
+    document.getElementById('noticeList').innerHTML = visible.map(r => {
+      const d = new Date(r['发布日期']);
+      const ds = d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0');
+      return `<div class="card">
+        <div class="date">${ds}</div>
+        <h3>${r['标题'] || ''}</h3>
+        <div class="content">${r['内容'] || ''}</div>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    document.getElementById('noticeList').innerHTML = '<div class="loading">加载失败</div>';
+  }
+}
+loadNotices();
+
+// 点击彩蛋：随机蹦出小星星
+document.addEventListener('click', (e) => {
+  const star = document.createElement('div');
+  star.textContent = '✦';
+  star.style.cssText = `
+    position: fixed;
+    left: ${e.clientX - 15}px;
+    top: ${e.clientY - 15}px;
+    font-size: ${20 + Math.random() * 20}px;
+    color: #b8a5d9;
+    pointer-events: none;
+    z-index: 9999;
+    animation: floatUp 1s ease-out forwards;
+  `;
+  document.body.appendChild(star);
+  setTimeout(() => star.remove(), 1000);
+});
+// 注入动画样式
+const style = document.createElement('style');
+style.textContent = `@keyframes floatUp {
+  0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-80px) scale(0.5) rotate(180deg); opacity: 0; }
+}`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>
