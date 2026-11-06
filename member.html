@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>成员 · 南开滨海文体部</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f7fa;
+  --bg-card: rgba(255,255,255,0.85);
+  --primary: #6b5b8e;
+  --primary-light: #9d8fc4;
+  --accent: #c4b5d9;
+  --text: #2d2d3a;
+  --text-light: #8a8a9a;
+  --shadow: 0 4px 24px rgba(107,91,142,0.08);
+  --shadow-hover: 0 8px 32px rgba(107,91,142,0.14);
+  --radius: 20px;
+}
+body.dark {
+  --bg: #12121e;
+  --bg-card: rgba(30,30,50,0.85);
+  --primary: #b8a5e0;
+  --primary-light: #9d8fc4;
+  --accent: #6b5b8e;
+  --text: #e8e8f0;
+  --text-light: #9a9ab0;
+  --shadow: 0 4px 24px rgba(0,0,0,0.3);
+  --shadow-hover: 0 8px 32px rgba(0,0,0,0.4);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: linear-gradient(90deg, #ffd6e8 0%, #e8d5ff 50%, #d6e4ff 100%);
+  background-size: 200% 200%;
+  animation: wave 8s ease-in-out infinite;
+  min-height: 100vh;
+  color: var(--text);
+  line-height: 1.6;
+}
+body.dark {
+  background: linear-gradient(90deg, #2a1a3a 0%, #1a1a2e 50%, #1a2030 100%);
+}
+@keyframes wave {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+nav {
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(107,91,142,0.06);
+  transition: all 0.3s ease;
+}
+body.dark nav {
+  background: rgba(20,20,35,0.72);
+  border-bottom: 1px solid rgba(184,165,224,0.1);
+}
+nav .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+nav .brand img {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+nav .brand span {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+nav .links { display: flex; gap: 8px; }
+nav .links a {
+  text-decoration: none;
+  color: var(--text-light);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 100px;
+  transition: all 0.25s ease;
+}
+nav .links a:hover { color: var(--primary); background: rgba(107,91,142,0.06); }
+nav .links a.active {
+  color: #fff;
+  background: var(--primary);
+  box-shadow: 0 2px 12px rgba(107,91,142,0.3);
+}
+.container { max-width: 900px; margin: 0 auto; padding: 60px 24px; }
+.hero {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.hero .tag {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--primary);
+  background: rgba(107,91,142,0.08);
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+.hero h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.card {
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255,255,255,0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-3px);
+}
+.card .avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.card h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text);
+  letter-spacing: 2px;
+}
+.card .cls {
+  font-size: 13px;
+  color: var(--primary-light);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+.card .hobby {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-bottom: 20px;
+}
+.radar {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 16px;
+  display: block;
+}
+.role {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.role.zk {
+  background: rgba(107,91,142,0.1);
+  color: var(--primary);
+}
+.role.hd {
+  background: rgba(196,181,217,0.2);
+  color: #8a7aab;
+}
+.loading {
+  text-align: center;
+  color: var(--text-light);
+  padding: 60px;
+  font-size: 14px;
+}
+@media (max-width: 600px) {
+  nav { padding: 14px 20px; }
+  nav .links a { padding: 6px 12px; font-size: 13px; }
+  .container { padding: 40px 16px; }
+  .hero h1 { font-size: 26px; }
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* 入场动画 */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+nav { animation: fadeInDown 0.6s ease-out both; }
+.hero h1 { animation: scaleIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both; }
+.hero .tag { animation: fadeInUp 0.6s ease-out 0.4s both; }
+.card { animation: fadeInUp 0.5s ease-out both; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand">
+    <img src="https://aka.doubaocdn.com/s/EDVt2xF5Zr" alt="部徽">
+    <span>文体部</span>
+  </div>
+  <div class="links">
+    <a href="index.html">首页</a>
+    <a href="member.html" class="active">成员</a>
+    <a href="gallery.html">相册</a>
+    <a href="log.html">日志</a>
+    <button id="themeToggle" style="background:none;border:none;cursor:pointer;font-size:18px;padding:8px 12px;border-radius:100px;transition:all 0.25s;">🌙</button>
+  </div>
+</nav>
+<div class="container">
+  <div class="hero">
+    <div class="tag">成员档案</div>
+    <h1>我们的团队</h1>
+  </div>
+  <div id="memberList" class="loading">加载中...</div>
+</div>
+
+<!-- 访问统计 -->
+<div style="text-align:center; padding:24px; color:var(--text-light); font-size:13px; opacity:0.6;">
+  <span id="busuanzi_container_site_pv">本站访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
+</div>
+<script src="config.js"></script>
+<script src="particles.js"></script>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+// 深色/浅色模式切换，默认深色
+if (localStorage.getItem('theme') !== 'light') {
+  document.body.classList.add('dark');
+}
+const themeToggle = document.getElementById('themeToggle');
+if (document.body.classList.contains('dark')) {
+  themeToggle.textContent = '☀️';
+}
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  themeToggle.textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+});
+</script>
+<script>
+function getRole(t, smax) {
+  return t >= smax ? { name: '中控', cls: 'zk' } : { name: '后台', cls: 'hd' };
+}
+
+function skillBars(t, s, w, c) {
+  const skills = [
+    { label: '技控', val: t },
+    { label: '统筹', val: s },
+    { label: '外联', val: w },
+    { label: '创想', val: c }
+  ];
+  return `<div class="skill-bars" style="margin:20px 0; width:100%;">
+    ${skills.map(sk => `
+      <div style="display:flex; align-items:center; margin-bottom:10px;">
+        <span style="width:36px; font-size:13px; color:var(--text-light);">${sk.label}</span>
+        <div style="flex:1; height:6px; background:rgba(107,91,142,0.15); border-radius:100px; margin:0 10px; overflow:hidden;">
+          <div style="height:100%; width:${sk.val/5*100}%; background:linear-gradient(90deg, #6b5b8e, #9d8fc4); border-radius:100px;"></div>
+        </div>
+        <span style="width:20px; font-size:13px; color:var(--primary); font-weight:600; text-align:right;">${sk.val}</span>
+      </div>
+    `).join('')}
+  </div>`;
+}
+
+async function loadMembers() {
+  try {
+    const records = await fetchRecords(DINGTALK_CONFIG.bases.members);
+    if (records.length === 0) {
+      document.getElementById('memberList').innerHTML = '<div class="loading">暂无成员</div>';
+      return;
+    }
+    document.getElementById('memberList').innerHTML = '<div class="grid">' + records.map(r => {
+      const t = Number(r['技控']) || 0;
+      const smax = Math.max(Number(r['统筹'])||0, Number(r['外联'])||0, Number(r['创想'])||0);
+      const role = getRole(t, smax);
+      const initial = (r['姓名'] || '?').charAt(0);
+      return `<div class="card">
+        <div class="avatar">${initial}</div>
+        <h3>${r['姓名'] || ''}</h3>
+        <div class="cls">${r['班级'] || ''}</div>
+        <div class="hobby">${r['爱好'] || ''}</div>
+        ${skillBars(t, Number(r['统筹'])||0, Number(r['外联'])||0, Number(r['创想'])||0)}
+        <span class="role ${role.cls}">${role.name}</span>
+      </div>`;
+    }).join('') + '</div>';
+  } catch (e) {
+    document.getElementById('memberList').innerHTML = '<div class="loading">加载失败</div>';
+  }
+}
+loadMembers();
+
+// 点击彩蛋：星星
+document.addEventListener('click', (e) => {
+  const star = document.createElement('div');
+  star.textContent = '✦';
+  star.style.cssText = `position:fixed;left:${e.clientX-15}px;top:${e.clientY-15}px;font-size:${20+Math.random()*20}px;color:#b8a5d9;pointer-events:none;z-index:9999;animation:floatUp 1s ease-out forwards;`;
+  document.body.appendChild(star);
+  setTimeout(() => star.remove(), 1000);
+});
+const s = document.createElement('style');
+s.textContent = `@keyframes floatUp{0%{transform:translateY(0) scale(1) rotate(0deg);opacity:1}100%{transform:translateY(-80px) scale(0.5) rotate(180deg);opacity:0}}`;
+document.head.appendChild(s);
+</script>
+</body>
+</html>
