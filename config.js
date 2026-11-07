@@ -18,4 +18,3 @@ async function fetchRecords(type) {
   }
   return _data[type] || [];
 }
-//（注：内容由AI生成）
