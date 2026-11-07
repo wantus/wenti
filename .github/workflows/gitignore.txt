@@ -1,0 +1,5 @@
+__pycache__/
+.tmp-tool-results/
+*.docx
+.DS_Store
+#（注：内容由AI生成）
