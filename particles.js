@@ -2,7 +2,7 @@
 (function() {
   const canvas = document.createElement('canvas');
   canvas.id = 'starParticles';
-  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;';
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;pointer-events:none;';
   document.body.appendChild(canvas);
   
   const ctx = canvas.getContext('2d');
@@ -86,4 +86,3 @@
   
   animate();
 })();
-//（注：内容由AI生成）
