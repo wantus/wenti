@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>留言板 · 南开滨海文体部</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #12121e;
+  --bg-card: rgba(30,30,50,0.85);
+  --primary: #b8a5e0;
+  --primary-light: #9d8fc4;
+  --accent: #6b5b8e;
+  --text: #e8e8f0;
+  --text-light: #9a9ab0;
+  --shadow: 0 4px 24px rgba(0,0,0,0.3);
+  --shadow-hover: 0 8px 32px rgba(0,0,0,0.4);
+  --radius: 20px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background-color: #1a1a2e;
+  background: linear-gradient(90deg, #2a1a3a 0%, #1a1a2e 50%, #1a2030 100%);
+  background-size: 200% 200%;
+  animation: wave 8s ease-in-out infinite;
+  min-height: 100vh;
+  color: var(--text);
+  line-height: 1.6;
+  position: relative;
+  overflow-x: hidden;
+}
+@keyframes wave {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+nav {
+  background: linear-gradient(135deg,
+    rgba(255,255,255,0.08) 0%,
+    rgba(184,165,224,0.06) 50%,
+    rgba(255,255,255,0.04) 100%);
+  backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+  -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+  padding: 12px 24px;
+  margin: 16px 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 16px;
+  z-index: 100;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    inset 0 -1px 0 rgba(255,255,255,0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+nav .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+nav .brand img {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 0 16px rgba(184,165,224,0.2);
+}
+nav .brand span {
+  font-size: 17px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #d4c5f0, #9d8fc4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1px;
+}
+nav .links { display: flex; gap: 4px; }
+nav .links a {
+  text-decoration: none;
+  color: var(--text-light);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: 100px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+nav .links a:hover {
+  color: var(--primary);
+  background: rgba(184,165,224,0.08);
+  transform: translateY(-1px);
+}
+nav .links a.active {
+  color: #fff;
+  background: linear-gradient(135deg, #9d8fc4, #7b6ba8);
+  box-shadow: 0 4px 20px rgba(157,143,196,0.35);
+}
+.container { max-width: 800px; margin: 0 auto; padding: 60px 24px; }
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.hero .tag {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--primary);
+  background: rgba(184,165,224,0.08);
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+.hero h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 4px;
+}
+.hero p {
+  color: var(--text-light);
+  font-size: 15px;
+  margin-top: 12px;
+}
+.card {
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.loading {
+  text-align: center;
+  color: var(--text-light);
+  padding: 60px;
+  font-size: 14px;
+}
+
+/* 留言板 */
+.message-section {
+  margin-top: 20px;
+}
+.section-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px;
+  color: var(--primary);
+  margin: 32px 0 18px;
+  text-align: center;
+}
+.message-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.message-form input,
+.message-form textarea {
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(184,165,224,0.2);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: var(--text);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+.message-form input:focus,
+.message-form textarea:focus {
+  border-color: var(--primary);
+}
+.message-form input::placeholder,
+.message-form textarea::placeholder {
+  color: var(--text-light);
+}
+.message-form button {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  color: #12121e;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.message-form button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(184,165,224,0.3);
+}
+.message-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+.message-list {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.message-item {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 20px 24px;
+  border: 1px solid rgba(184,165,224,0.15);
+}
+.message-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.message-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #12121e;
+  font-weight: 700;
+  font-size: 16px;
+}
+.message-nickname {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 15px;
+}
+.message-content {
+  color: var(--text-light);
+  font-size: 15px;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+.message-reply {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: rgba(184,165,224,0.08);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 10px 10px 0;
+}
+.message-reply-label {
+  font-size: 13px;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.message-reply-text {
+  color: var(--text-light);
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+/* 入场动画 */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+nav { animation: fadeInDown 0.6s ease-out both; }
+.hero h1 { animation: scaleIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both; }
+.hero p { animation: fadeInUp 0.6s ease-out 0.5s both; }
+.message-form { animation: fadeInUp 0.6s ease-out 0.4s both; }
+.message-item { animation: fadeInUp 0.5s ease-out both; }
+
+@media (max-width: 600px) {
+  nav { padding: 12px 16px; margin: 12px 12px 0; }
+  nav .links a { padding: 6px 11px; font-size: 13px; }
+  .container { padding: 40px 16px; }
+  .hero h1 { font-size: 26px; }
+  .card { padding: 20px; }
+  .message-item { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand">
+    <img src="https://aka.doubaocdn.com/s/EDVt2xF5Zr" alt="部徽">
+    <span>文体部</span>
+  </div>
+  <div class="links">
+    <a href="index.html">首页</a>
+    <a href="member.html">成员</a>
+    <a href="gallery.html">相册</a>
+    <a href="log.html">日志</a>
+    <a href="message.html" class="active">留言板</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="hero">
+    <div class="tag">留言板</div>
+    <h1>说点什么吧</h1>
+    <p>留言需审核，部长会在这里回复你</p>
+  </div>
+
+  <section class="message-section">
+    <div class="message-form card">
+      <input type="text" id="msgNickname" placeholder="你的昵称" maxlength="20" required>
+      <textarea id="msgContent" placeholder="想说点什么..." rows="3" maxlength="500" required></textarea>
+      <button id="msgSubmit" onclick="submitMessage()">提交留言</button>
+    </div>
+
+    <h2 class="section-title">大家的留言</h2>
+    <div id="messageList" class="message-list"></div>
+  </section>
+</div>
+
+<script src="config.js"></script>
+<script src="particles.js"></script>
+<script>
+// ========== 留言板 ==========
+// Pipedream webhook 地址
+const MESSAGE_WEBHOOK = 'https://eomertv3pec1bou.m.pipedream.net';
+
+async function loadMessages() {
+  try {
+    const records = await fetchRecords(DINGTALK_CONFIG.bases.message);
+    const visible = records.filter(r => r['是否公开'] === true);
+    const listEl = document.getElementById('messageList');
+    if (visible.length === 0) {
+      listEl.innerHTML = '<div class="loading">暂无留言，来抢沙发吧</div>';
+      return;
+    }
+    listEl.innerHTML = visible.map(r => {
+      const nickname = r['昵称'] || '匿名同学';
+      const content = r['内容'] || '';
+      const reply = r['部长回复'] || r['回复'] || '';
+      const firstChar = nickname.charAt(0);
+      return `<div class="message-item">
+        <div class="message-header">
+          <div class="message-avatar">${firstChar}</div>
+          <div class="message-nickname">${nickname}</div>
+        </div>
+        <div class="message-content">${content}</div>
+        ${reply ? `<div class="message-reply">
+          <div class="message-reply-label">部长回复</div>
+          <div class="message-reply-text">${reply}</div>
+        </div>` : ''}
+      </div>`;
+    }).join('');
+  } catch (e) {
+    document.getElementById('messageList').innerHTML = '<div class="loading">留言加载失败</div>';
+  }
+}
+loadMessages();
+
+async function submitMessage() {
+  const nickname = document.getElementById('msgNickname').value.trim();
+  const content = document.getElementById('msgContent').value.trim();
+  const btn = document.getElementById('msgSubmit');
+
+  if (!nickname || !content) {
+    alert('请填写昵称和留言内容');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '提交中...';
+
+  try {
+    const resp = await fetch(MESSAGE_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nickname, message: content })
+    });
+    if (resp.ok) {
+      document.getElementById('msgNickname').value = '';
+      document.getElementById('msgContent').value = '';
+      alert('留言提交成功！审核通过后会显示在页面上');
+    } else {
+      alert('提交失败，请稍后再试');
+    }
+  } catch (e) {
+    alert('网络错误，请稍后再试');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '提交留言';
+  }
+}
+
+// 点击彩蛋：随机蹦出小星星
+document.addEventListener('click', (e) => {
+  const star = document.createElement('div');
+  star.textContent = '✦';
+  star.style.cssText = `
+    position: fixed;
+    left: ${e.clientX - 15}px;
+    top: ${e.clientY - 15}px;
+    font-size: ${20 + Math.random() * 20}px;
+    color: #b8a5d9;
+    pointer-events: none;
+    z-index: 9999;
+    animation: floatUp 1s ease-out forwards;
+  `;
+  document.body.appendChild(star);
+  setTimeout(() => star.remove(), 1000);
+});
+const floatStyle = document.createElement('style');
+floatStyle.textContent = `@keyframes floatUp {
+  0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-80px) scale(0.5) rotate(180deg); opacity: 0; }
+}`;
+document.head.appendChild(floatStyle);
+</script>
+</body>
+</html>

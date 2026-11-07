@@ -4,7 +4,8 @@ const DINGTALK_CONFIG = {
     notice: 'notice',
     members: 'members',
     gallery: 'gallery',
-    log: 'log'
+    log: 'log',
+    message: 'message'
   }
 };
 

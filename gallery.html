@@ -33,18 +33,27 @@ body {
   50% { background-position: 100% 50%; }
 }
 nav {
-  background: rgba(20,20,35,0.72);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  padding: 18px 32px;
+  background: linear-gradient(135deg,
+    rgba(255,255,255,0.08) 0%,
+    rgba(184,165,224,0.06) 50%,
+    rgba(255,255,255,0.04) 100%);
+  backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+  -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+  padding: 12px 24px;
+  margin: 16px 24px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
-  top: 0;
+  top: 16px;
   z-index: 100;
-  border-bottom: 1px solid rgba(184,165,224,0.1);
-  transition: all 0.3s ease;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    inset 0 -1px 0 rgba(255,255,255,0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 nav .brand {
   display: flex;
@@ -56,28 +65,37 @@ nav .brand img {
   height: 36px;
   border-radius: 10px;
   object-fit: cover;
+  box-shadow: 0 0 16px rgba(184,165,224,0.2);
 }
 nav .brand span {
   font-size: 17px;
   font-weight: 600;
-  color: var(--primary);
-  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #d4c5f0, #9d8fc4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1px;
 }
-nav .links { display: flex; gap: 8px; }
+nav .links { display: flex; gap: 4px; }
 nav .links a {
   text-decoration: none;
   color: var(--text-light);
   font-size: 14px;
   font-weight: 500;
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: 100px;
-  transition: all 0.25s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
-nav .links a:hover { color: var(--primary); background: rgba(107,91,142,0.06); }
+nav .links a:hover {
+  color: var(--primary);
+  background: rgba(184,165,224,0.08);
+  transform: translateY(-1px);
+}
 nav .links a.active {
   color: #fff;
-  background: var(--primary);
-  box-shadow: 0 2px 12px rgba(107,91,142,0.3);
+  background: linear-gradient(135deg, #9d8fc4, #7b6ba8);
+  box-shadow: 0 4px 20px rgba(157,143,196,0.35);
 }
 .container { max-width: 900px; margin: 0 auto; padding: 60px 24px; }
 .hero {
@@ -175,8 +193,8 @@ nav .links a.active {
 }
 .lightbox .close:hover { color: #fff; }
 @media (max-width: 600px) {
-  nav { padding: 14px 20px; }
-  nav .links a { padding: 6px 12px; font-size: 13px; }
+  nav { padding: 12px 16px; margin: 12px 12px 0; }
+  nav .links a { padding: 6px 11px; font-size: 13px; }
   .container { padding: 40px 16px; }
   .hero h1 { font-size: 26px; }
 }
@@ -211,6 +229,7 @@ nav { animation: fadeInDown 0.6s ease-out both; }
     <a href="member.html">成员</a>
     <a href="gallery.html" class="active">相册</a>
     <a href="log.html">日志</a>
+    <a href="message.html">留言板</a>
   </div>
 </nav>
 <div class="container">

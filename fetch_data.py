@@ -10,7 +10,8 @@ BASES = {
     'notice': 'MyQA2dXW7Zj9lbyntdjrkrm08zlwrZgb',
     'members': '4lgGw3P8vzZva9bKHnNYvA9l85daZ90D',
     'gallery': 'wva2dxOW430Klr7ZcnDbAgpK8bkz3BRL',
-    'log': '1zknDm0WR2x3qbG5IdyDBReOWBQEx5rG'
+    'log': '1zknDm0WR2x3qbG5IdyDBReOWBQEx5rG',
+    'message': 'OG9lyrgJPG63qRlBiPpG6QgBVzN67Mw4'
 }
 
 def get_token():
@@ -36,6 +37,10 @@ def main():
     token = get_token()
     result = {}
     for name, base_id in BASES.items():
+        if not base_id:
+            result[name] = []
+            print(f'{name}: 未配置，跳过')
+            continue
         result[name] = list_records(token, base_id)
         print(f'{name}: {len(result[name])} 条记录')
     
